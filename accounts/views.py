@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import UserForm
 from .models import User
+from django.contrib import messages
 
 
 def register_user(request):
     if request.method == "POST":
-        print(request.POST)
         form = UserForm(request.POST)
         if form.is_valid():
             # Creating user using the form
@@ -21,12 +21,15 @@ def register_user(request):
             user = User.objects.create_user(**form.cleaned_data)
             user.role = User.CUSTOMER
             user.save()
-            print("User is created")
+            messages.success(request, "Your account has been created successfully !.")
             return redirect("register_user")
+        else:
+            print("invalid form")
+            print(form.errors)
 
     else:
         form = UserForm()
-        context = {
-            "form": form,
-        }
-        return render(request, "accounts/register_user.html", context)
+    context = {
+        "form": form,
+    }
+    return render(request, "accounts/register_user.html", context)
