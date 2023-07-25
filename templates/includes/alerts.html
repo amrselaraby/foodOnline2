@@ -1,11 +1,11 @@
 {% if messages %}
 <!-- prettier-ignore -->
 {% for message in messages %}
-<div class="alert alert-success" role="alert">
+<div class="alert alert-{{message.tags}} show-notification" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
-  <p>{{ message }}</p>
+  <strong>{{ message }}</strong>
 </div>
 
 {% endfor %} {% endif %}
